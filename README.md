@@ -3,58 +3,52 @@
 `provider-vultr` is a [Crossplane](https://crossplane.io/) provider that
 is built using [Upjet](https://github.com/upbound/upjet) code
 generation tools and exposes XRM-conformant managed resources for the
-Vultr API.
+[Vultr](vultr.com) API.
+
+Status: POC
 
 ## Getting Started
 
-Install the provider by using the following command after changing the image tag
-to the [latest release](https://marketplace.upbound.io/providers/luebken/provider-vultr):
-```
-up ctp provider install luebken/provider-vultr:v0.1.0
-```
+Prerequisites: Go, K8s Cluster with Crossplane installed and a Vultr account:
 
-Alternatively, you can use declarative installation:
-```
-cat <<EOF | kubectl apply -f -
-apiVersion: pkg.crossplane.io/v1
-kind: Provider
-metadata:
-  name: provider-vultr
-spec:
-  package: luebken/provider-vultr:v0.1.0
-EOF
+Test the API with curl:
+```bash
+# get from https://my.vultr.com/settings/#settingsapi
+export VULTR_API_KEY=<YOUR API KEY>
+# get all storage object
+curl "https://api.vultr.com/v2/object-storage" -X GET -H "Authorization: Bearer ${VULTR_API_KEY}"
+# create an example storage object
+curl "https://api.vultr.com/v2/object-storage" -X POST -H "Authorization: Bearer ${VULTR_API_KEY}" -H "Content-Type: application/json" --data '{"label" : "Example Object Storage from Curl","cluster_id" : 2}'
 ```
 
-Notice that in this example Provider resource is referencing ControllerConfig with debug enabled.
+Next install this Vultr Crossplane provider:
+```bash
+# clone this repo
+git clone git@github.com:luebken/provider-vultr.git
+cd provider-vultr
 
-You can see the API reference [here](https://doc.crds.dev/github.com/luebken/provider-vultr).
-
-## Developing
-
-Run code-generation pipeline:
-```console
-go run cmd/generator/main.go "$PWD"
+# install the crds
+kubectl apply -f package/crds
 ```
 
-Run against a Kubernetes cluster:
-
-```console
+Run the provider:
+```bash
 make run
 ```
 
-Build, push, and install:
-
-```console
-make all
+Configure the provider:
+```bash
+# !!! change the exampels/secret.yaml to use your VULTR_API_KEY
+kubectl apply -f examples/providerconfig/secret.yaml
+kubectl apply -f examples/providerconfig/providerconfig.yaml
 ```
 
-Build binary:
+Create a storage object:
+```bash
+kubectl apply -f exampels/object/storage.yaml
+# wait a bit
 
-```console
-make build
+kubectl get storage
+NAME                    READY   SYNCED   EXTERNAL-NAME   AGE
+sample-storage-object   true   True                     5s
 ```
-
-## Report a Bug
-
-For filing bugs, suggesting improvements, or requesting new features, please
-open an [issue](https://github.com/luebken/provider-vultr/issues).
