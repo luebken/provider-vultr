@@ -1,0 +1,8 @@
+apiVersion: object.vultr.upbound.io/v1alpha1
+kind: Storage
+metadata:
+  name: my-first-storage-object
+spec:
+  forProvider:
+    clusterId: 2
+    label: a-label-from-matthias

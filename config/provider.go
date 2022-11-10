@@ -10,7 +10,7 @@ import (
 
 	ujconfig "github.com/upbound/upjet/pkg/config"
 
-	"github.com/luebken/provider-vultr/config/null"
+	"github.com/luebken/provider-vultr/config/object"
 )
 
 const (
@@ -34,7 +34,7 @@ func GetProvider() *ujconfig.Provider {
 
 	for _, configure := range []func(provider *ujconfig.Provider){
 		// add custom config functions
-		null.Configure,
+		object.Configure,
 	} {
 		configure(pc)
 	}

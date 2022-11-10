@@ -2,7 +2,7 @@
 Copyright 2021 Upbound Inc.
 */
 
-package null
+package object
 
 import (
 	ujconfig "github.com/upbound/upjet/pkg/config"
@@ -10,8 +10,7 @@ import (
 
 // Configure configures the null group
 func Configure(p *ujconfig.Provider) {
-	p.AddResourceConfigurator("null_resource", func(r *ujconfig.Resource) {
-		r.Kind = "Resource"
+	p.AddResourceConfigurator("vultr_object_storage", func(r *ujconfig.Resource) {
 		// And other overrides.
 	})
 }

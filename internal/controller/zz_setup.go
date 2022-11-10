@@ -9,7 +9,7 @@ import (
 
 	"github.com/upbound/upjet/pkg/controller"
 
-	resource "github.com/luebken/provider-vultr/internal/controller/null/resource"
+	storage "github.com/luebken/provider-vultr/internal/controller/object/storage"
 	providerconfig "github.com/luebken/provider-vultr/internal/controller/providerconfig"
 )
 
@@ -17,7 +17,7 @@ import (
 // the supplied manager.
 func Setup(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
-		resource.Setup,
+		storage.Setup,
 		providerconfig.Setup,
 	} {
 		if err := setup(mgr, o); err != nil {
