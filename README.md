@@ -43,12 +43,20 @@ kubectl apply -f examples/providerconfig/secret.yaml
 kubectl apply -f examples/providerconfig/providerconfig.yaml
 ```
 
-Create a storage object:
+Create a [storage object](examples/object/storage.yaml):
 ```bash
 kubectl apply -f exampels/object/storage.yaml
 # wait a bit
 
 kubectl get storage
-NAME                    READY   SYNCED   EXTERNAL-NAME   AGE
-sample-storage-object   true   True                     5s
+NAME                    READY   SYNCED   EXTERNAL-NAME                          AGE
+sample-storage-object   True    True     24ef0c3c-0dd4-4fe9-905e-953360a12332   4m22s
 ```
+
+🎉
+
+Now when you open [my.vultr.com/objectstorage](https://my.vultr.com/objectstorage/), you will something like the following:
+
+![](vultr-console-storage-example.jpg)
+
+
