@@ -7,7 +7,6 @@ package clients
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 
 	"github.com/crossplane/crossplane-runtime/pkg/resource"
 	"github.com/pkg/errors"
@@ -71,7 +70,7 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 			"api_key": creds["api_key"],
 		}
 
-		fmt.Printf("TODO Debug: %+v\n", creds)
+		//fmt.Printf("TODO Debug: %+v\n", creds)
 
 		return ps, nil
 	}
